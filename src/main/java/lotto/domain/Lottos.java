@@ -24,10 +24,6 @@ public class Lottos {
         return lottos;
     }
 
-    public int getMatchNumCnt(int index, Lotto winLotto) {
-        return lottos.get(index).countMatchNum(winLotto);
-    }
-
     public int getLottosSize() {
         return this.lottos.size();
     }
@@ -35,4 +31,9 @@ public class Lottos {
     public List<Lotto> getLottoList() {
         return Collections.unmodifiableList(lottos);
     }
+
+    public void addLotto(Lotto lotto) {
+        lottos.add(lotto);
+    }
+
 }

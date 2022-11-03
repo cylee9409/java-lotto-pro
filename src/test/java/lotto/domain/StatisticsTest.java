@@ -20,9 +20,10 @@ public class StatisticsTest {
         lottoList.add(new Lotto("12,13,14,15,16,17"));
         Lottos lottos = new Lottos(lottoList);
         Lotto winLotto = new Lotto("1,2,3,4,5,6");
-        Statistics statistics = new Statistics(lottos, winLotto);
+        LottoNumber bonusBall = new LottoNumber(7);
+        Statistics statistics = new Statistics(lottos, winLotto, bonusBall);
 
-        assertThat(statistics.getMatchedLottoCnt(6)).isEqualTo(1);
+        assertThat(statistics.getMatchedLottoCnt(Winning.FIRST)).isEqualTo(1);
 
     }
 
@@ -36,8 +37,9 @@ public class StatisticsTest {
         lottoList.add(new Lotto("12,13,14,15,16,17"));
         Lottos lottos = new Lottos(lottoList);
         Lotto winLotto = new Lotto("1,2,3,4,5,6");
+        LottoNumber bonusBall = new LottoNumber(7);
 
-        Statistics statistics = new Statistics(lottos, winLotto);
+        Statistics statistics = new Statistics(lottos, winLotto, bonusBall);
         assertThat(statistics.getYield(new Payment("14000"))).isEqualTo(0.35);
     }
 }

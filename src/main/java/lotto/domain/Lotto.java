@@ -64,16 +64,16 @@ public class Lotto {
         Arrays.stream(nums).forEach(num -> lotto.add(new LottoNumber(num)));
     }
 
-    public List<LottoNumber> getLotto() {
-        return Collections.unmodifiableList(lotto);
-    }
-
     public boolean isContained(LottoNumber number) {
         return lotto.contains(number);
     }
 
     public int countMatchNum(Lotto winLotto) {
         return (int) lotto.stream().filter(winLotto::isContained).count();
+    }
+
+    public List<LottoNumber> getLotto() {
+        return Collections.unmodifiableList(lotto);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Lotto {
             reportLotto.append(lottoNumber.toString() + DELIMITER + SPACE);
         }
 
-        reportLotto = reportLotto.delete(reportLotto.length()-2, reportLotto.length());
+        reportLotto = reportLotto.delete(reportLotto.length() - 2, reportLotto.length());
 
         return reportLotto.append(SQUARE_BRACKET_RIGHT).toString();
 

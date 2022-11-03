@@ -5,17 +5,21 @@ import java.util.List;
 
 public enum Winning {
 
-    THREE_MATCHES(3, 5_000),
-    FOUR_MATCHES(4, 50_000),
-    FIVE_MATCHES(5, 1_500_000),
-    SIX_MATCHES(6, 2_000_000_000);
+    FIRST(6, 2_000_000_000, false),
+    SECOND(5, 30_000_000, true),
+    THIRD(5, 1_500_000, false),
+    FOURTH(4, 50_000, false),
+    FIFTH(3, 5_000, false),
+    MISS(0, 0, false);
 
     private final int matches;
     private final int reward;
+    private final boolean bonusBallMatched;
 
-    Winning(int matches, int reward) {
+    Winning(int matches, int reward, boolean bonusBallMatched) {
         this.matches = matches;
         this.reward = reward;
+        this.bonusBallMatched = bonusBallMatched;
     }
 
     public int getMatches() {
@@ -26,26 +30,34 @@ public enum Winning {
         return reward;
     }
 
-    public static double getRewardsByMatch(int matches) {
-
-        double rewards = 0;
-
-        for (Winning winning : getWinningInfo()) {
-            rewards += getRewards(winning, matches);
-        }
-
-        return rewards;
+    public boolean getBonusBallMatched() {
+        return bonusBallMatched;
     }
 
-    private static double getRewards(Winning winning, int matches) {
-        if (winning.getMatches() == matches) {
-            return winning.getReward();
-        }
-        return 0;
+    //TODO : 꼭 이렇게 나눠야만 할까?
+    public static Winning getWinningByMatches(int matches) {
+
+        return getWinningInfo().stream()
+                .filter(winning -> winning.getMatches() == matches && winning.getBonusBallMatched() == false)
+                .findFirst()
+                .orElse(MISS);
+
+    }
+
+    public static Winning getWinningByMatches(int matches, boolean bonusBallMatched) {
+
+        return getWinningInfo().stream()
+                .filter(winning -> winning.getMatches() == matches && winning.getBonusBallMatched() == bonusBallMatched)
+                .findFirst()
+                .orElse(MISS);
+
     }
 
     public static List<Winning> getWinningInfo() {
-        return Arrays.asList(THREE_MATCHES, FOUR_MATCHES, FIVE_MATCHES, SIX_MATCHES);
+        return Arrays.asList(FIRST, SECOND, THIRD, FOURTH, FIFTH);
     }
 
+    public static void main(String[] args) {
+        System.out.println(Winning.getWinningByMatches(4, true));
+    }
 }

@@ -19,14 +19,13 @@ public class ResultView {
         for (Winning winning : Winning.getWinningInfo()) {
             int match = winning.getMatches();
             int reward = winning.getReward();
-            int lottoCnt = statistics.getMatchedLottoCnt(match);
-            String msg = String.format(Messages.SHOW_MATCHES_INFO.getMsg(), match, reward, lottoCnt);
-            System.out.println(msg);
+            int lottoCnt = statistics.getMatchedLottoCnt(winning);
+            String msg = winning.getBonusBallMatched() ? Messages.SHOW_SECOND_WINNING_INFO.getMsg() : Messages.SHOW_WINNING_INFO.getMsg();
+            System.out.println(String.format(msg, match, reward, lottoCnt));
         }
 
         double yield = statistics.getYield(payment);
         String msg = String.format(Messages.SHOW_TOTAL_YIELD.getMsg(), yield);
         System.out.println(msg);
     }
-
 }
